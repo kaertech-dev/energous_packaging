@@ -1,0 +1,12 @@
+services:
+  traceability:
+    build: .
+    image: greenflux_packing
+    container_name: greenflux_packing
+    ports:
+      - "5052:5052"
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - FLASK_ENV=production
