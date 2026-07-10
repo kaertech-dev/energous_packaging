@@ -86,3 +86,6 @@ gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
 ## Admin Dashboard
 - Password protected (set `ADMIN_PASSWORD` in `routes_admin.py`)
 - Shows: per-operator scan counts, daily summaries, full log table, per-operator drill-down
+
+
+## hello po
