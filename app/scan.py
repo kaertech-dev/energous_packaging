@@ -1,13 +1,13 @@
 from datetime import datetime
 from app.db import query_one, get_conn
 
-REQUIRED_STATIONS = ("progtest", "assembly", "fvi")
+REQUIRED_STATIONS = ("progtest", "assembly", "lasermarking1", "vi", "ft1", "ft2", "lasermarking2", "fvi")
 
 def lookup_unit(serial_num: str):
     """Check b2btag_main for the serial and its station statuses."""
     return query_one(
         """
-        SELECT serial_num, po_num, progtest, assembly, lasermarking1, vi
+        SELECT serial_num, po_num, progtest, assembly, lasermarking1, vi,ft1,ft2,lasermarking2,fvi
         FROM energous.esense_main
         WHERE serial_num = %s
         LIMIT 1
@@ -17,7 +17,7 @@ def lookup_unit(serial_num: str):
 
 def already_packed(serial_num: str) -> bool:
     row = query_one(
-        "SELECT id FROM energous.esense_packaging WHERE serial_num = %s LIMIT 1",
+        "SELECT serial_num FROM energous.esense_packaging WHERE serial_num = %s LIMIT 1",
         (serial_num,)
     )
     return row is not None
@@ -29,8 +29,8 @@ def stations_passed(row: dict) -> bool:
 def record_packing(serial_num: str, po_num: str, operator_en: str, shift: str, remarks: str = ""):
     """
     Atomically:
-      1. Set packing=1 in b2btag_main
-      2. Insert a row into b2btag_packing (status=1, test_rep=1)
+      1. Set packaging=1 in b2btag_main
+      2. Insert a row into b2btag_packaging (status=1, test_rep=1)
     """
     conn = get_conn()
     try:
@@ -39,7 +39,7 @@ def record_packing(serial_num: str, po_num: str, operator_en: str, shift: str, r
         cur.execute(
             """
             UPDATE energous.esense_main
-            SET packing = 1
+            SET packaging = 1
             WHERE serial_num = %s
             """,
             (serial_num,)
@@ -47,7 +47,7 @@ def record_packing(serial_num: str, po_num: str, operator_en: str, shift: str, r
 
         cur.execute(
             """
-            INSERT INTO energous.esense_packing
+            INSERT INTO energous.esense_packaging
                 (serial_num, po_num, operator_en, shift, date_time, test_rep, remarks, status)
             VALUES (%s, %s, %s, %s, %s, 1, %s, 1)
             """,
