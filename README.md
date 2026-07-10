@@ -26,10 +26,10 @@ packing_scan/
 
 ## Database Requirements
 
-### Table: greenflux.b2btag_main
-Expected columns: serial_num, po_num, progtest, assembly, fvi, packing
+### Table: energous.esense_main
+Expected columns: serial_num, po_num, progtest, assembly, lasermarking1, vi, ft1, ft2, lasermarking2, fvi, packing
 
-### Table: greenflux.b2btag_packing
+### Table: energous.esense_packing
 Expected columns: id (AI PK), serial_num, po_num, operator_en, shift, date_time, test_rep, remarks, status
 
 ### Table: operators.main
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 export DB_HOST=192.168.1.38
 export DB_USER=labeling
 export DB_PASSWORD=labelling
-export DB_NAME=greenflux
+export DB_NAME=energous
 
 # 3. Set a strong secret key for sessions
 export SECRET_KEY=your-random-secret-here
