@@ -1,8 +1,8 @@
-# Packing Scan — Deployment Guide
+# Packaging Scan — Deployment Guide
 
 ## Project Structure
 ```
-packing_scan/
+packaging_scan/
 ├── run.py                  # Entry point
 ├── requirements.txt
 ├── app/
@@ -26,10 +26,10 @@ packing_scan/
 
 ## Database Requirements
 
-### Table: greenflux.b2btag_main
-Expected columns: serial_num, po_num, progtest, assembly, fvi, packing
+### Table: energous.esense_main
+Expected columns: serial_num, po_num, progtest, assembly, lasermarking1, vi, ft1, ft2, lasermarking2, fvi, packaging
 
-### Table: greenflux.b2btag_packing
+### Table: energous.esense_packaging
 Expected columns: id (AI PK), serial_num, po_num, operator_en, shift, date_time, test_rep, remarks, status
 
 ### Table: operators.main
@@ -42,10 +42,10 @@ Expected columns: operator_en (and any other operator info)
 pip install -r requirements.txt
 
 # 2. (Optional) Override DB settings via environment
-export DB_HOST=192.168.1.38
-export DB_USER=labeling
-export DB_PASSWORD=labelling
-export DB_NAME=greenflux
+export DB_HOST=sercret_value
+export DB_USER=sercret_value
+export DB_PASSWORD=sercret_value
+export DB_NAME=sercret_value
 
 # 3. Set a strong secret key for sessions
 export SECRET_KEY=your-random-secret-here
@@ -78,9 +78,9 @@ gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
 ## Scan Logic
 
 1. Operator logs in with **Employee Number** → looked up in `operators.main.operator_en`
-2. On scan: looks up `b2btag_main` by `serial_num`
+2. On scan: looks up `esense_main` by `serial_num`
 3. Checks if `progtest=1`, `assembly=1`, `fvi=1`
-4. If all pass → sets `packing=1` in `b2btag_main` and inserts into `b2btag_packing` with `test_rep=1`, `status=1`
+4. If all pass → sets `packaging=1` in `esense_main` and inserts into `esense_packaging` with `test_rep=1`, `status=1`
 5. Tray counter increments up to 50; "New Tray" resets the in-session counter
 
 ## Admin Dashboard

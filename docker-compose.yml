@@ -1,8 +1,8 @@
 services:
   traceability:
     build: .
-    image: greenflux_packing
-    container_name: greenflux_packing
+    image: energous_packaging
+    container_name: energous_packing
     ports:
       - "5052:5052"
     restart: always
