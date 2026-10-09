@@ -1,7 +1,6 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "packing-scan-secret-2024")
     TRAY_LIMIT = 50
 
 class DBConfig:
