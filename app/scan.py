@@ -4,7 +4,7 @@ from app.db import query_one, get_conn
 REQUIRED_STATIONS = ("progtest", "assembly", "lasermarking1", "vi", "ft1", "ft2", "lasermarking2", "fvi")
 
 def lookup_unit(serial_num: str):
-    """Check b2btag_main for the serial and its station statuses."""
+    """Check esense_main for the serial and its station statuses."""
     return query_one(
         """
         SELECT serial_num, po_num, progtest, assembly, lasermarking1, vi,ft1,ft2,lasermarking2,fvi
@@ -29,8 +29,8 @@ def stations_passed(row: dict) -> bool:
 def record_packing(serial_num: str, po_num: str, operator_en: str, shift: str, remarks: str = ""):
     """
     Atomically:
-      1. Set packaging=1 in b2btag_main
-      2. Insert a row into b2btag_packaging (status=1, test_rep=1)
+      1. Set packaging=1 in esense_main
+      2. Insert a row into esense_packaging (status=1, test_rep=1)
     """
     conn = get_conn()
     try:
@@ -67,7 +67,7 @@ def process_scan(serial_num: str, operator_en: str, shift: str, remarks: str = "
     Full scan pipeline. Returns a result dict:
       status  : "ok" | "already_packed" | "fail" | "not_found"
       message : human-readable string
-      unit    : the b2btag_main row (or None)
+      unit    : the esense_main row (or None)
     """
     serial_num = serial_num.strip()
 
