@@ -29,7 +29,7 @@ packing_scan/
 ### Table: energous.esense_main
 Expected columns: serial_num, po_num, progtest, assembly, lasermarking1, vi, ft1, ft2, lasermarking2, fvi, packing
 
-### Table: energous.esense_packing
+### Table: energous.esense_packaging
 Expected columns: id (AI PK), serial_num, po_num, operator_en, shift, date_time, test_rep, remarks, status
 
 ### Table: operators.main
