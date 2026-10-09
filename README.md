@@ -78,9 +78,9 @@ gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
 ## Scan Logic
 
 1. Operator logs in with **Employee Number** → looked up in `operators.main.operator_en`
-2. On scan: looks up `b2btag_main` by `serial_num`
+2. On scan: looks up `esense_main` by `serial_num`
 3. Checks if `progtest=1`, `assembly=1`, `fvi=1`
-4. If all pass → sets `packaging=1` in `b2btag_main` and inserts into `b2btag_packaging` with `test_rep=1`, `status=1`
+4. If all pass → sets `packaging=1` in `esense_main` and inserts into `esense_packaging` with `test_rep=1`, `status=1`
 5. Tray counter increments up to 50; "New Tray" resets the in-session counter
 
 ## Admin Dashboard
