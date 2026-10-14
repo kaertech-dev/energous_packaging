@@ -1,3 +1,4 @@
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 from flask import Flask
 from app.config import Config
@@ -6,6 +7,8 @@ from app.routes_admin import admin_bp
 
 def create_app():
     app = Flask(__name__, template_folder="../templates", static_folder="../static")
+    # Behind kts-proxy the app is served under a path prefix (X-Forwarded-Prefix).
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
     app.config.from_object(Config)
     secret_key = os.environ.get("SECRET_KEY")
     if not secret_key:

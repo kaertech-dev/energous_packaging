@@ -1,6 +1,7 @@
 import os
 
 class Config:
+    SESSION_COOKIE_NAME = "packaging_session"
     TRAY_LIMIT = 50
 
 class DBConfig:
