@@ -7,6 +7,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Prevent Python buffering stdout/stderr
 ENV PYTHONUNBUFFERED=1
 
+# Keep timestamps in local shop time
+ENV TZ=Asia/Manila
+
 # Set working directory
 WORKDIR /app
 
@@ -29,5 +32,9 @@ COPY . .
 # Expose Flask port
 EXPOSE 5052
 
-# Run Flask app
-CMD ["python", "run.py"]
+# Run as a non-root user
+RUN useradd --create-home --uid 10001 appuser
+USER appuser
+
+# Run the app with a production WSGI server
+CMD ["gunicorn", "--workers", "2", "--timeout", "60", "--bind", "0.0.0.0:5052", "run:app"]
