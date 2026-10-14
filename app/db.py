@@ -11,6 +11,9 @@ def get_conn():
         port=DBConfig.PORT,
         cursorclass=pymysql.cursors.DictCursor,
         autocommit=False,
+        connect_timeout=5,
+        read_timeout=10,
+        write_timeout=10,
     )
 
 def query_one(sql, params=None):
