@@ -133,7 +133,7 @@
     const btn = document.getElementById("btn-scan");
     btn.disabled = true;
 
-    const res  = await fetch("/api/scan", {
+    const res  = await fetch(APP_ROOT + "/api/scan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ serial_num: serial, shift: shiftSel.value })
@@ -169,8 +169,8 @@
   });
 
   document.getElementById("btn-logout").addEventListener("click", async () => {
-    await fetch("/api/logout", { method: "POST" });
-    window.location.href = "/login";
+    await fetch(APP_ROOT + "/api/logout", { method: "POST" });
+    window.location.href = APP_ROOT + "/login";
   });
 </script>
 {% endblock %}
